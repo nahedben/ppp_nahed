@@ -1,0 +1,175 @@
+<div fxLayout="column" >
+  <!-- Image, Desc. & Summary -->
+  <div fxLayout="row" fxLayoutAlign="space-around start">
+      <div fxFlex="80%">
+          <!-- Image & Desc. -->
+          <div fxLayout="column" class="imageproduct">
+              
+
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+   
+              <ol class="carousel-indicators" >
+                
+                <li  data-target="#carouselExampleIndicators" data-slide-to="0" class="active"  ></li>
+                
+                <li  data-target="#carouselExampleIndicators" *ngFor="let item of product.Pictures | slice:1; let i = index; " data-slide-to="i" ></li>
+       
+               
+                
+              </ol>
+              <div class="carousel-inner">
+                <div class="carousel-item active"  >
+                  <img class="d-block w-100" width="800" height="380" [src]="firstimg" >
+               
+                </div>
+                <div class="carousel-item "  *ngFor="let item of product.Pictures | slice:1; let i = index; ">
+                    <img class="d-block w-100"  width="800" height="380"   [src]="item" >
+                    
+                  </div>
+                  
+              </div>
+         
+              <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </a>
+             
+            </div>
+
+
+
+
+              <!-- Desc. -->
+              <div fxLayout="row" layout-wrap>
+                  <div fxFlex="100%">
+                      <h4>{{product.Title}}</h4>
+                  </div>
+                  <div fxFlex>
+                      <p>{{product.Description}}</p>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <!-- Summary -->
+      <mat-list fxFlex fxFlexAlign="start" fxFlexOffset="5%">
+          <h4>
+              <mat-icon>info</mat-icon>
+              Product's Highlight
+          </h4>           
+          <mat-divider></mat-divider>
+          <mat-list-item>
+              <h4 mat-line ><strong>Owner</strong></h4>
+              <br>
+              <p mat-line>{{user.FirstName}} &nbsp; {{user.LastName}}</p>
+             
+          </mat-list-item>
+          <mat-list-item>
+            <h4  mat-line ><strong>Contact</strong></h4>
+            
+            <p mat-line >{{user.phoneNumber}}</p>
+          </mat-list-item>
+          <mat-list-item>
+              <h4 mat-line><strong>Type</strong></h4>
+              <p mat-line>{{product.Type}}</p>
+          </mat-list-item>
+          <mat-list-item>
+                  <h4 mat-line><strong>Price</strong></h4>
+                  <p mat-line>{{product.Price}} DT</p>
+              </mat-list-item>
+          <mat-list-item>
+              <h4 mat-line><strong>Released</strong></h4>
+              <p mat-line> {{product.AddDate | date: 'MMM d, y h:mm:ss a'}} </p>
+          </mat-list-item>
+          <mat-list-item>
+              <h4 mat-line>
+                  <p-rating
+                      [(ngModel)]="starRating"
+                      [cancel]="false"
+                      readonly="true">
+                  </p-rating>
+              </h4>
+          </mat-list-item>
+          <mat-list-item>
+              <h4 mat-line>
+                  <mat-chip>Count reviews</mat-chip>
+              </h4>
+          </mat-list-item>
+      </mat-list>
+  </div>
+  <!-- Reviews -->
+  <div fxFlex>
+      <h4>
+          <mat-icon>people</mat-icon>
+          Customers Reviews
+      </h4>
+      <mat-divider></mat-divider>
+      <mat-card
+          fxLayout="row" 
+          fxLayoutAlign="start"
+          layout-wrap
+          >
+          <!-- Avatar, Rating etc. -->
+          <div fxFlex="20%">
+              <div fxLayout="column" fxLayoutAlign="start" fxLayoutGap="20px">
+                  <mat-icon style="font-size: 50px">perm_identity</mat-icon>
+                  <p-rating
+                      [(ngModel)]="starRating"
+                      [cancel]="false"
+                      readonly="true">
+                  </p-rating>
+                  <p>shopItemReview.reviewDate</p>- by shopItemReview.userId
+              </div>
+          </div>
+          <!-- Remarks -->
+          <div fxFlex="80%">
+              <p>shopItemReview.remarks</p>
+          </div>
+      </mat-card>
+  </div>
+  <br> <br>
+  <div fxFlex>
+      <!-- Review Form -->
+      <h4>
+          <mat-icon>rate_review</mat-icon>
+          Compose
+      </h4>
+      <mat-divider></mat-divider>
+      <form
+            fxLayout="row"
+            fxLayoutAlign="start"
+            (ngSubmit)="onSubmit(shopItem._id, remarks.value)">
+            <div fxFlex="30%"></div>
+            <div fxFlex="40%">
+                <div fxLayout="column" fxLayoutAlign="center" fxLayoutGap="20px">
+                    <mat-form-field style="width: 100%">
+                        <textarea 
+                            matInput
+                            #remarks
+                            placeholder="Share with us your thoughts & experience"
+                            matTextareaAutosize
+                            matAutosizeMinRows="3"
+                            matAutosizeMaxRows="5"
+                            [(ngModel)]="starRating"
+                            [ngModelOptions]="{standalone: true}"
+                            [disabled]='false'>
+                        </textarea>
+                    </mat-form-field>
+                    <div fxLayout="row" fxLayoutAlign="space-between">
+                        <p-rating name="rating" [(ngModel)]="starRating"></p-rating>
+                        <button 
+                            mat-raised-button
+                            color="primary"
+                            [disabled]='false'>
+                            Submit Review
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div fxFlex="30%"></div>
+        </form>
+  </div>
+</div>

@@ -1,0 +1,171 @@
+<div class="container">
+  <div class="row my-2">
+      <div class="col-lg-8 order-lg-2">
+          <ul class="nav nav-tabs">
+              <li class="nav-item">
+                  <a href="" data-target="#profile" data-toggle="tab" class="nav-link active">Profile</a>
+              </li>
+              <li class="nav-item">
+                <a href="" data-target="#messages" data-toggle="tab" class="nav-link">Reviews</a>
+            </li>
+             <li class="nav-item">
+              <a href="" data-target="#products" data-toggle="tab" class="nav-link">Add Product</a>
+             </li>
+          </ul>
+          <div class="tab-content py-4">
+              <div class="tab-pane active" id="profile" >
+                  <h5 class="mb-3">{{ConnectedUser.UserName}} Profile</h5>
+                  <div class="row">
+                      <div class="col-md-6">
+                          <h6>About</h6>
+                          <p>
+                             {{ConnectedUser.FirstName}}&nbsp;{{ConnectedUser.LastName}}
+                          </p>
+                          <h6>Phone Number</h6>
+                          <p>
+                              {{ConnectedUser.phoneNumber}} 
+                          </p>
+                          <h6>Rating</h6>
+                          <p>
+                            Rating here
+                          </p>
+                      </div>
+                      <div class="col-md-6">
+                          <h6>Recent Product</h6>
+                          <a href="#" class="badge badge-dark badge-pill" *ngFor="let a of productlist">{{a.Title}}</a>
+                        
+                     
+                         
+                      </div>
+                      <div class="col-md-12">
+                          <h5 class="mt-2"><span class="fa fa-clock-o ion-clock float-right"></span>Products</h5>
+                         <hr>
+
+
+                         <div class="row justify-content-center">
+                            <div class="col-lg-12">
+                              <div class="row row-grid">
+                                <div class="col-lg-3" *ngFor="let pack of productlist">
+                                  <div class="card card-lift--hover shadow border-0" >
+                                      
+                                    <div class="card-body py-5 "   [ngStyle]="getstyle(pack.Pictures[0])">
+                                    <span class="mask bg-gradient-danger opacity-3"></span>
+                                      <div class="icon icon-shape icon-shape-warning rounded-circle mb-4">
+                                        <i class="ni ni-app"></i>
+                                      </div>
+                                      <h6 class="mb-0 text-uppercase text-Black">{{ pack.Title }}</h6>
+                                      <p class="display-4 text-Black">{{ (pack.Description.length>6)? (pack.Description | slice:0:6)+'..':(pack.Description) }}</p>
+                                     
+                                     
+                                    </div>
+                                  
+                                  
+                                  </div>
+                                </div>
+                                
+                              </div>
+                              
+                            </div>
+                        </div>
+
+
+
+
+
+
+
+
+
+                      </div>
+                  </div>
+                  <!--/row-->
+              </div>
+              <div class="tab-pane" id="messages">
+                <div class="alert alert-info alert-dismissable">
+                    <a class="panel-close close" data-dismiss="alert">×</a> This is an <strong>.alert</strong>. Use this to show important messages to the user.
+                </div>
+                <table class="table table-hover table-striped">
+                    <tbody>                                    
+                        <tr>
+                            <td>
+                               <span class="float-right font-weight-bold">3 hrs ago</span> Here is your a link to the latest summary report from the..
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                               <span class="float-right font-weight-bold">Yesterday</span> There has been a request on your account since that was..
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                               <span class="float-right font-weight-bold">9/10</span> Porttitor vitae ultrices quis, dapibus id dolor. Morbi venenatis lacinia rhoncus. 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                               <span class="float-right font-weight-bold">9/4</span> Vestibulum tincidunt ullamcorper eros eget luctus. 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                               <span class="float-right font-weight-bold">9/4</span> Maxamillion ais the fix for tibulum tincidunt ullamcorper eros. 
+                            </td>
+                        </tr>
+                    </tbody> 
+                </table>
+            </div>
+            <div class="tab-pane" id="products">
+              <form #userForm="ngForm" (ngSubmit)="onSubmit()">
+                  <div class="form-group row">
+                      <label class="col-lg-3 col-form-label form-control-label">Title</label>
+                      <div class="col-lg-9">
+                          <input class="form-control" type="text" placeholder="Product Title" name="title" [(ngModel)]="product.Title" #title="ngModel">
+                      </div>
+                  </div>
+                  <div class="form-group row">
+                      <label class="col-lg-3 col-form-label form-control-label">Type</label>
+                       
+                      <div class="col-lg-9">
+                         <ejs-dropdownlist id='games' #sample1 [dataSource]='sportsData' [fields]='localFields' [placeholder]='localWaterMark' [popupHeight]='height' [(ngModel)]="product.Type" name="address"></ejs-dropdownlist>   
+                      </div>
+                  </div>
+                  <div class="form-group row">
+                      <label class="col-lg-3 col-form-label form-control-label">Price (DT)</label>
+                      <div class="col-lg-9">
+                          <input class="form-control" type="number" placeholder="Product Price" name="Price" [(ngModel)]="product.Price" #Price="ngModel">
+                      </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="description">Description</label>
+                    <textarea class="form-control" id="description" rows="3" placeholder="Product Description" name="Description" [(ngModel)]="product.Description" #Description="ngModel"></textarea>
+                  </div>
+                  <div class="form-group ">
+                      <label class="col-lg-3 col-form-label form-control-label">Pictures</label>
+                     <hr>
+                     <input type="file" multiple (change)="detectFiles($event)" >
+                     <div class="img-wrap" *ngFor="let url of urls" >
+                      <span class="close" (click)="deleteimg(url)">&times;</span>
+                      <img    [src]="url" class="rounded mb-3 img" width="180" height="172" >
+                  </div>
+                       
+                    
+                  </div>
+                 
+                  <div class="form-group row">
+                      <label class="col-lg-3 col-form-label form-control-label"></label>
+                      <div class="col-lg-9">
+                         
+                          <input type="submit" class="btn btn-primary" value="Add Your Product">
+                      </div>
+                  </div>
+              </form>
+          </div>
+      </div>
+     
+  </div>
+  <div class="col-lg-4 order-lg-1 text-center">
+    <img [src]="ConnectedUser.Picture" class="mx-auto img-fluid img-circle d-block" alt="avatar">
+   
+    
+</div>
+</div>

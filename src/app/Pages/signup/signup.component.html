@@ -1,0 +1,91 @@
+<h1 align="center" class="display-4 mb-5">Sign Up</h1>
+<div style="width:40%; margin: 25px auto" >
+  <form #form="ngForm" (ngSubmit)="onSubmit($event)">
+    <div class="form-group">
+      <app-image-upload [isRound]="true"></app-image-upload>
+    </div>
+    <div class="form-group">
+      <label><b>User Name </b></label>
+      <input [(ngModel)]="user.UserName" type="text" class="form-control form-control-lg" id="name" name="name" placeholder="Your name" required #name="ngModel">
+        <div  *ngIf="name.invalid && (name.dirty ||name.touched)">
+            <div *ngIf="name.errors.required">
+              UserName is required.
+            </div>
+            <div *ngIf="name.errors.minlength">
+              UserName must be at least 3 characters long.
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+      <label><b>First Name </b></label>
+      <input [(ngModel)]="user.FirstName" type="text" class="form-control form-control-lg" id="FirstName" name="FirstName" placeholder="Your name" required #FirstName="ngModel">
+        <div  *ngIf="FirstName.invalid && (FirstName.dirty ||FirstName.touched)">
+            <div *ngIf="FirstName.errors.required">
+              First Name is required.
+            </div>
+            <div *ngIf="FirstName.errors.minlength">
+              First Name must be at least 3 characters long.
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+      <label><b>Last Name </b></label>
+      <input [(ngModel)]="user.LastName" type="text" class="form-control form-control-lg" id="LastName" name="LastName" placeholder="Your name" required #LastName="ngModel">
+        <div  *ngIf="LastName.invalid && (LastName.dirty ||LastName.touched)">
+            <div *ngIf="LastName.errors.required">
+              Last Name is required.
+            </div>
+            <div *ngIf="LastName.errors.minlength">
+              Last Name must be at least 3 characters long.
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+      <label><b>Email address</b></label>
+      <input [(ngModel)]="user.Email" type="email" class="form-control form-control-lg" id="email" name="email" placeholder="Enter email" email required autofocus  #email="ngModel">
+      <div  *ngIf="email.invalid && (email.dirty ||email.touched)" >
+          <div *ngIf="email.errors.required" >
+              Email is required.
+          </div>
+          <div *ngIf="email.errors.email">
+              Invalid Email.
+          </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label><b>Password</b></label>
+      <input  [(ngModel)]="user.Password" type="password" class="form-control form-control-lg" id="password" name="password" placeholder="Password" minlength="3" required #password="ngModel">
+        <div  *ngIf="password.invalid && (password.dirty ||password.touched)">
+            <div *ngIf="password.errors.required">
+                Password is required.
+            </div>
+            <div *ngIf="password.errors.minlength">
+                Password must be at least 3 characters long.
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+      <label><b>Phone</b></label>
+      <input [(ngModel)]="user.phoneNumber" type="text" class="form-control form-control-lg" id="phone" name="phone" placeholder="Phone" required #phone="ngModel" >
+        <div  *ngIf="phone.invalid && (phone.dirty ||phone.touched)">
+            <div *ngIf="phone.errors.required">
+                Phone is required.
+            </div>
+        </div>
+    </div>
+    
+    <div class="form-group">
+     
+        <div id='local'   >
+        
+              <label><b>Address</b></label>
+              <ejs-dropdownlist id='games' #sample1 [dataSource]='sportsData' [fields]='localFields' [placeholder]='localWaterMark' [popupHeight]='height' [(ngModel)]="user.Address" name="address"></ejs-dropdownlist>
+            
+        </div>
+   
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-lg btn-primary btn-block" [disabled]="!form.form.valid" >Sign Up</button>
+    </div>
+  </form>
+</div>

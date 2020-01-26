@@ -1,0 +1,74 @@
+<div fxLayout="row" fxLayoutAlign="center center">
+  <a mat-icon-button disabled>
+      <mat-icon>search</mat-icon>
+  </a>
+  <mat-form-field class="search-form-field">
+      <input
+          matInput
+          type="text"
+          placeholder="Search for..."
+          [(ngModel)]="filterBy"/>
+      <button
+          mat-button
+          *ngIf="filterBy"
+          matSuffix
+          mat-icon-button
+          aria-label="Clear"
+          (click)="filterBy=''">
+          <mat-icon>close</mat-icon>
+      </button>
+  </mat-form-field>
+  <button mat-icon-button>
+      <mat-icon>add</mat-icon>
+  </button>
+ 
+</div>
+      
+<ng-template #loading>
+  <p style="text-align:center"><br/><br/><br/><br/><img src="assets/spin.svg"/></p>
+</ng-template>
+
+<mat-grid-list cols="3" rowHeight="550" >
+  <mat-grid-tile *ngFor="let prod of productList | filter:filterBy"><!--boucle here-->
+      <mat-card class="material-card">
+          <mat-card-header>
+              <div mat-card-avatar class="card-header-image" [ngStyle]="getstyle(prod.UserPicture)" width="40" height="40" style="border-radius: 50%;" >
+             
+              </div>
+              <mat-card-title>{{prod.Title}}</mat-card-title>
+              <mat-card-subtitle>
+                  <span>{{prod.Type}}</span>
+              </mat-card-subtitle>
+              <span class="flex-fill-remaining-space"></span>
+              <span>{{prod.Price}} DT</span>
+          </mat-card-header>
+          <img mat-card-image [src]="prod.Pictures[0]"  width="350" height="172" alt="Photo of a Shiba Inu">
+          <mat-card-content>
+              <p>
+                {{prod.Description}}
+              </p>
+          </mat-card-content>
+          <mat-card-actions>
+              <mat-toolbar>
+                  <p-rating 
+                      [(ngModel)]="rating"
+                      [cancel]="false"
+                      readonly="true">
+                  </p-rating>
+                  <span class="flex-fill-remaining-space"></span>
+                  <mat-chip-list>
+                      <mat-chip>55 reviews</mat-chip>
+                  </mat-chip-list>
+              </mat-toolbar>
+          </mat-card-actions>
+          <mat-card-actions allign="end">
+              
+              <a mat-icon-button [routerLink]="['/product/',prod.id]" >
+                  <mat-icon>info_outline</mat-icon>
+              </a>
+              <span class="flex-fill-remaining-space"></span>
+              
+          </mat-card-actions>
+      </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>
